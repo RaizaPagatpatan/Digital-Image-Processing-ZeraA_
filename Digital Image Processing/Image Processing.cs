@@ -19,6 +19,7 @@ namespace Digital_Image_Processing
         {
             InitializeComponent();
             this.FormClosing += Form1_FormClosing;
+            this.Text = "Act_1 Image Processing Pagatpatan";
 
         }
 
@@ -310,7 +311,55 @@ namespace Digital_Image_Processing
 
 
 
-        //3. COLOR INVERSION
+        //3. COLOR INVERSION (credits to CITU DIP METHODS REPOSITORY)
+
+        private void btnInvert_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+
+                Image invertImage = InvertImage((Bitmap)pictureBox1.Image.Clone());
+                pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+                pictureBox2.Image = invertImage;
+            }
+            else
+            {
+                MessageBox.Show("No image to process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private Image InvertImage(Bitmap originalImage)
+        {
+            // Display inverted image
+            BitmapData invertImage = originalImage.LockBits(new Rectangle(0, 0, originalImage.Width, originalImage.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            System.IntPtr Scan0 = invertImage.Scan0;
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)Scan0;
+
+                // No need for stride-related calculations
+                int nWidth = originalImage.Width * 3;
+
+                for (int y = 0; y < originalImage.Height; ++y)
+                {
+                    for (int x = 0; x < nWidth; ++x)
+                    {
+                        p[0] = (byte)(255 - p[0]);
+                        ++p;
+                    }
+                }
+            }
+
+            originalImage.UnlockBits(invertImage);
+
+            Bitmap invertedBitmap = new Bitmap(originalImage);
+
+            return (Image)invertedBitmap;
+        }
+
+
         //4. HISTOGRAM
         private void btnHistogram_Click(object sender, EventArgs e)
         {
@@ -339,10 +388,10 @@ namespace Digital_Image_Processing
                     Color originalColor = originalImage.GetPixel(x, y);
 
                     //            // GRAYSCALE FORMULA
-                                byte grayscaleValue = (byte)(originalColor.R * 0.3 + originalColor.G * 0.59 + originalColor.B * 0.11);
+                    byte grayscaleValue = (byte)(originalColor.R * 0.3 + originalColor.G * 0.59 + originalColor.B * 0.11);
 
                     //            // SET PIXEL
-                                grayscaleImage.SetPixel(x, y, Color.FromArgb(grayscaleValue, grayscaleValue, grayscaleValue));
+                    grayscaleImage.SetPixel(x, y, Color.FromArgb(grayscaleValue, grayscaleValue, grayscaleValue));
                 }
             }
 
@@ -379,7 +428,56 @@ namespace Digital_Image_Processing
             return histogramImage;
         }
 
+       
 
         //5. SEPIA
+        
+        private void btnSepia_Click(object sender, EventArgs e)
+        {
+
+            if (pictureBox1.Image != null)
+            {
+
+                Image histogramImage = SepiaImage((Bitmap)pictureBox1.Image.Clone());
+                pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+                pictureBox2.Image = histogramImage;
+            }
+            else
+            {
+                MessageBox.Show("No image to process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private Image SepiaImage(Bitmap originalImage)
+        {
+            Bitmap sepiaImage = new Bitmap(originalImage.Width, originalImage.Height);
+
+            for (int y = 0; y < originalImage.Height; y++)
+            {
+                for (int x = 0; x < originalImage.Width; x++)
+                {
+                    Color pixelColor = originalImage.GetPixel(x, y);
+
+                    //Sepia formula
+                    int newRed = (int)(pixelColor.R * 0.393 + pixelColor.G * 0.769 + pixelColor.B * 0.189);
+                    int newGreen = (int)(pixelColor.R * 0.349 + pixelColor.G * 0.686 + pixelColor.B * 0.168);
+                    int newBlue = (int)(pixelColor.R * 0.272 + pixelColor.G * 0.534 + pixelColor.B * 0.131);
+
+                    // color range
+                    newRed = Math.Min(255, Math.Max(0, newRed));
+                    newGreen = Math.Min(255, Math.Max(0, newGreen));
+                    newBlue = Math.Min(255, Math.Max(0, newBlue));
+
+                    Color newColor = Color.FromArgb(newRed, newGreen, newBlue);
+                    sepiaImage.SetPixel(x, y, newColor);
+                }
+            }
+
+            return sepiaImage;
+        }
+
+
+
+
     }
 }

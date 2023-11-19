@@ -35,6 +35,9 @@
             btnToggleCamera = new Button();
             btnNoFilter = new Button();
             btnHistogram = new Button();
+            btnInvert = new Button();
+            label1 = new Label();
+            btnSepia = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -105,11 +108,42 @@
             btnHistogram.UseVisualStyleBackColor = true;
             btnHistogram.Click += btnHistogram_Click;
             // 
+            // btnInvert
+            // 
+            btnInvert.Location = new Point(850, 446);
+            btnInvert.Name = "btnInvert";
+            btnInvert.Size = new Size(94, 29);
+            btnInvert.TabIndex = 7;
+            btnInvert.Text = "Inverted";
+            btnInvert.UseVisualStyleBackColor = true;
+            btnInvert.Click += btnInvert_Click;
+            // 
+            // label1
+            // 
+            label1.Location = new Point(284, 502);
+            label1.Name = "label1";
+            label1.Size = new Size(216, 45);
+            label1.TabIndex = 8;
+            label1.Text = "// Camera display works but Camera output is capture smh";
+            // 
+            // btnSepia
+            // 
+            btnSepia.Location = new Point(550, 481);
+            btnSepia.Name = "btnSepia";
+            btnSepia.Size = new Size(94, 29);
+            btnSepia.TabIndex = 9;
+            btnSepia.Text = "Sepia";
+            btnSepia.UseVisualStyleBackColor = true;
+            btnSepia.Click += btnSepia_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1047, 556);
+            Controls.Add(btnSepia);
+            Controls.Add(label1);
+            Controls.Add(btnInvert);
             Controls.Add(btnHistogram);
             Controls.Add(btnNoFilter);
             Controls.Add(btnToggleCamera);
@@ -133,5 +167,8 @@
         private Button btnToggleCamera;
         private Button btnNoFilter;
         private Button btnHistogram;
+        private Button btnInvert;
+        private Label label1;
+        private Button btnSepia;
     }
 }
