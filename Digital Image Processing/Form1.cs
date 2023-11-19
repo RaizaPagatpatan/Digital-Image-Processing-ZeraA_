@@ -358,11 +358,11 @@ namespace Digital_Image_Processing
             }
 
             // Display histogram image
-            Bitmap histogramImage = new Bitmap(256, 800);
+            Bitmap histogramImage = new Bitmap(originalImage.Width, originalImage.Height);
 
-            for (int x = 0; x < 256; x++)
+            for (int x = 0; x < originalImage.Width; x++)
             {
-                for (int y = 0; y < 800; y++)
+                for (int y = 0; y < originalImage.Height; y++)
                 {
                     histogramImage.SetPixel(x, y, Color.White);
                 }
