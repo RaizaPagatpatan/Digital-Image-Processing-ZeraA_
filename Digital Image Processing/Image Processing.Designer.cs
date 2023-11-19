@@ -38,6 +38,9 @@
             btnInvert = new Button();
             label1 = new Label();
             btnSepia = new Button();
+            btnSave = new Button();
+            label2 = new Label();
+            btnOverlay1 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -122,9 +125,9 @@
             // 
             label1.Location = new Point(284, 502);
             label1.Name = "label1";
-            label1.Size = new Size(216, 45);
+            label1.Size = new Size(216, 69);
             label1.TabIndex = 8;
-            label1.Text = "// Camera display works but Camera output is capture smh";
+            label1.Text = "// Camera display works but filter click output is only capture photo (T^T)/\r\n";
             // 
             // btnSepia
             // 
@@ -136,11 +139,48 @@
             btnSepia.UseVisualStyleBackColor = true;
             btnSepia.Click += btnSepia_Click;
             // 
+            // btnSave
+            // 
+            btnSave.BackgroundImage = Resources.cat_paw;
+            btnSave.BackgroundImageLayout = ImageLayout.Zoom;
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Location = new Point(950, 446);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(67, 64);
+            btnSave.TabIndex = 10;
+            btnSave.TextAlign = ContentAlignment.TopCenter;
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
+            // 
+            // label2
+            // 
+            label2.Font = new Font("OCR A Extended", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(950, 513);
+            label2.Name = "label2";
+            label2.Size = new Size(67, 25);
+            label2.TabIndex = 11;
+            label2.Text = "SAVE";
+            label2.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // btnOverlay1
+            // 
+            btnOverlay1.Location = new Point(650, 481);
+            btnOverlay1.Name = "btnOverlay1";
+            btnOverlay1.Size = new Size(94, 29);
+            btnOverlay1.TabIndex = 12;
+            btnOverlay1.Text = "X-Mas";
+            btnOverlay1.UseVisualStyleBackColor = true;
+            btnOverlay1.Click += btnOverlay1_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1047, 556);
+            ClientSize = new Size(1047, 580);
+            Controls.Add(btnOverlay1);
+            Controls.Add(label2);
+            Controls.Add(btnSave);
             Controls.Add(btnSepia);
             Controls.Add(label1);
             Controls.Add(btnInvert);
@@ -170,5 +210,8 @@
         private Button btnInvert;
         private Label label1;
         private Button btnSepia;
+        private Button btnSave;
+        private Label label2;
+        private Button btnOverlay1;
     }
 }

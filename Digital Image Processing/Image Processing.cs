@@ -428,10 +428,10 @@ namespace Digital_Image_Processing
             return histogramImage;
         }
 
-       
+
 
         //5. SEPIA
-        
+
         private void btnSepia_Click(object sender, EventArgs e)
         {
 
@@ -476,7 +476,119 @@ namespace Digital_Image_Processing
             return sepiaImage;
         }
 
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (pictureBox2.Image != null)
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "JPEG Image|*.jpg|PNG Image|*.png|Bitmap Image|*.bmp";
 
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = saveFileDialog.FileName;
+
+                    // SAVE: choose format
+                    pictureBox2.Image.Save(fileName, GetImageFormatFromExtension(fileName));
+                }
+            }
+            else
+            {
+                MessageBox.Show("No image to save.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private ImageFormat GetImageFormatFromExtension(string fileName)
+        {
+            string extension = Path.GetExtension(fileName)?.ToLower();
+
+            switch (extension)
+            {
+                case ".jpg":
+                case ".jpeg":
+                    return ImageFormat.Jpeg;
+                case ".png":
+                    return ImageFormat.Png;
+                case ".bmp":
+                    return ImageFormat.Bmp;
+                default:
+                    return ImageFormat.Jpeg; // DEFAULT: unknown file extension
+            }
+        }
+
+        //private void btnOverlay1_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        // Load overlay image from embedded resources
+        //        Bitmap overlayImage = Resources.xmas_rsc; // Replace "YourOverlayImage" with the actual resource name
+
+        //        // Apply overlay filter with stretching
+        //        ApplyOverlayFilter(overlayImage);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Error loading overlay image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
+
+        //private void ApplyOverlayFilter(Bitmap originalImage)
+        //{
+
+
+
+
+
+        //}
+        private void btnOverlay1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // xmas pic overlay uwu
+                Bitmap overlayImage = Resources.xmas_rsc; 
+
+                Bitmap originalImage = new Bitmap(pictureBox1.Image);
+
+                // resize overlay to match orig. image
+                Bitmap resizedOverlay = ResizeImage(overlayImage, originalImage.Width, originalImage.Height);
+
+                // apply overlay via resized overlay katong gi stretch
+                Bitmap resultImage = ApplyOverlayFilter(originalImage, resizedOverlay);
+
+                // picture box 2 .zoom
+                pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+                pictureBox2.Image = resultImage;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading overlay image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private Bitmap ResizeImage(Image image, int width, int height)
+        {
+            Bitmap result = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(result))
+            {
+                g.DrawImage(image, 0, 0, width, height);
+            }
+            return result;
+        }
+
+        private Bitmap ApplyOverlayFilter(Bitmap originalImage, Bitmap overlayImage)
+        {
+            Bitmap resultImage = new Bitmap(originalImage.Width, originalImage.Height);
+
+            using (Graphics g = Graphics.FromImage(resultImage))
+            {
+                // Copy original image
+                g.DrawImage(originalImage, 0, 0);
+
+                // Stretch overlay
+                g.DrawImage(overlayImage, new Rectangle(0, 0, originalImage.Width, originalImage.Height), new Rectangle(0, 0, overlayImage.Width, overlayImage.Height), GraphicsUnit.Pixel);
+            }
+
+            return resultImage;
+        }
 
 
     }
